@@ -1,4 +1,4 @@
-package mall.client.controller;
+package mall.client.controller.Client;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

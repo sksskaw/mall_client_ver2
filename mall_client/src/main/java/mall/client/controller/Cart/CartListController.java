@@ -1,4 +1,4 @@
-package mall.client.controller;
+package mall.client.controller.Cart;
 
 import java.io.IOException;
 import java.util.*;
