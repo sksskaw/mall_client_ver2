@@ -19,6 +19,7 @@ public class InsertClientController extends HttpServlet {
 	// mainMenu의 링크를 눌렀을 때
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// 로그인 체크
 		HttpSession session = request.getSession();
 		if(session.getAttribute("loginClient") != null) {
 			response.sendRedirect(request.getContextPath()+"/IndexController");

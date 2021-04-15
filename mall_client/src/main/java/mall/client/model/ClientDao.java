@@ -7,6 +7,57 @@ import mall.client.vo.*;
 public class ClientDao {
 	private DBUtil dbutil;
 	
+	// 비밀번호 수정
+	public void updateClientPw(Client client) {
+
+		this.dbutil = new DBUtil();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
+			conn = this.dbutil.getConnection();
+			String sql = "UPDATE client SET client_pw = PASSWORD(?) WHERE client_mail=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, client.getClientPw());
+			stmt.setString(2, client.getClientMail());
+			System.out.println("updateClientPw " + stmt);
+			stmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			this.dbutil.close(null, stmt, conn);
+		}
+
+	}
+	
+	// (비밀번호 수정을 위한) 현재 비밀번호 체크
+	public Client checkClientCurrenPw(Client client) {
+		Client returnClient = null;
+		this.dbutil = new DBUtil();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = this.dbutil.getConnection();
+			String sql = "SELECT client_pw clientPw, client_mail clientMail FROM client WHERE client_mail = ? AND client_pw = PASSWORD(?)";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, client.getClientMail());
+			stmt.setString(2, client.getClientPw());
+			System.out.println("checkClientCurrenPw " + stmt);
+			rs = stmt.executeQuery();
+			if(rs.next()) {
+				returnClient = new Client();
+				returnClient.setClientMail(rs.getString("clientMail"));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			this.dbutil.close(rs, stmt, conn);
+		}
+		
+		return returnClient;
+	}
+	
 	// 회원정보
 	public Client selectClientOne(String clientMail) {
 		this.dbutil = new DBUtil();

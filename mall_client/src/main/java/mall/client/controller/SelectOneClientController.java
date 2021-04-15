@@ -25,9 +25,11 @@ public class SelectOneClientController extends HttpServlet {
 			return;
 		}
 		String clientMail = ((Client)session.getAttribute("loginClient")).getClientMail(); // 세션에서 받아온 값을 문자열타입으로 clientMail에 저장 (세션을 받아 올때 email만 받아옴)
-		System.out.println(clientMail+"고객정보세션"); //디버깅코드
 		this.clientDao = new ClientDao();
+		
+		// 로그인 계정 정보 가져오기
 		client = this.clientDao.selectClientOne(clientMail);
+		
 		request.setAttribute("client", client);
 		request.getRequestDispatcher("/WEB-INF/view/client/clientOne.jsp").forward(request, response);
 	}
