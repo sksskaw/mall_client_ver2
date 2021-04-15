@@ -9,6 +9,30 @@ public class CartDao {
 	
 	private DBUtil dbutil;
 	
+	// 회원 탈퇴 시 장바구니 항목 전체 삭제
+	public void deleteCartAll(String clientMail) {
+		this.dbutil = new DBUtil();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			conn = this.dbutil.getConnection();
+			String sql = "DELETE FROM cart WHERE client_mail=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, clientMail);
+			System.out.println("deleteCartAll " + stmt);
+			
+			stmt.executeUpdate();
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			this.dbutil.close(null, stmt, conn);
+		}
+		
+		return;
+	}
+	
 	// 장바구니 항목 삭제
 	public void deleteCart(Cart cart) {
 		this.dbutil = new DBUtil();

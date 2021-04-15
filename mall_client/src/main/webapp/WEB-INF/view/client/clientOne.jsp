@@ -34,7 +34,8 @@
 	<!-- UpdateClientPwController.doGet() - updateClientPw.jsp -->
 	<!-- UpdateClientPwController.doPost() - clientDao.updateClientPw() - session.invalidate() - redirect:/IndexController -->
 	<a href="<%=request.getContextPath()%>/UpdateClientPwController?clientMail=<%=client.getClientMail() %>"><button type="button">비밀번호수정</button></a>
+	
 	<!-- DeleteClientController - clientDao.deleteClient() -- session.invalidate() - redirect:/IndexController-->
-	<a href=""><button type="button">회원탈퇴</button></a>
+	<a href="<%=request.getContextPath()%>/DeleteClientController"><button type="button">회원탈퇴</button></a>
 </body>
 </html>

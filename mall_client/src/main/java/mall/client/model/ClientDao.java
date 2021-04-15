@@ -7,6 +7,26 @@ import mall.client.vo.*;
 public class ClientDao {
 	private DBUtil dbutil;
 	
+	// 회원 탈퇴 메소드
+	public void deleteClient(Client client) {
+		this.dbutil = new DBUtil();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
+			conn = this.dbutil.getConnection();
+			String sql = "DELETE FROM client WHERE client_mail=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, client.getClientMail());
+			System.out.println("deleteClient " + stmt);
+			stmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			this.dbutil.close(null, stmt, conn);
+		}
+	}
+	
 	// 비밀번호 수정
 	public void updateClientPw(Client client) {
 
@@ -30,7 +50,7 @@ public class ClientDao {
 
 	}
 	
-	// (비밀번호 수정을 위한) 현재 비밀번호 체크
+	// (비밀번호 수정을 위한) 현재 비밀번호 체크, 회원 탈퇴 시 비밀번호 체크
 	public Client checkClientCurrenPw(Client client) {
 		Client returnClient = null;
 		this.dbutil = new DBUtil();
