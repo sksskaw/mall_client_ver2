@@ -20,6 +20,7 @@ public class DeleteClientController extends HttpServlet {
 	// 회원 탈퇴 전 비밀번호 입력 받기
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
 		// 로그인 체크
 		HttpSession session = request.getSession();
 		if(session.getAttribute("loginClient") == null) {
