@@ -131,6 +131,7 @@ public class EbookDao {
 			while(rs.next()) {
 				Ebook ebook = new Ebook();
 				ebook.setEbookNo(rs.getInt("ebook_No"));
+				ebook.setCategoryName(rs.getString("category_name"));
 				ebook.setEbookTitle(rs.getString("ebook_title"));
 				ebook.setEbookPrice(rs.getInt("ebook_price"));
 				ebook.setEbookImg(rs.getString("ebook_img"));

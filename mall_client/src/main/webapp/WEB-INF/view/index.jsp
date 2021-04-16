@@ -61,6 +61,7 @@
 		%>
 				<td>
 					<div><img src="<%=request.getContextPath()%>/img/default.jpg"></div>
+					<div>카테고리 : <%=ebook.getCategoryName()%></div>
 					<div>제목 : 
 						<a href="<%=request.getContextPath()%>/EbookOneController?ebookNo=<%=ebook.getEbookNo()%>">
 							<%=ebook.getEbookTitle()%>
