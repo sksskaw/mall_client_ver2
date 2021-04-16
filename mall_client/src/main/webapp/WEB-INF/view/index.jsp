@@ -12,8 +12,26 @@
 	<h1>index</h1>
 	<%
 		List<Ebook> ebookList = (List<Ebook>)request.getAttribute("ebookList");
+		List<Category> categoryList = (List<Category>)request.getAttribute("categoryList");
+		
+		int currentPage = (Integer)request.getAttribute("currentPage");
+		int rowPerPage = (Integer)request.getAttribute("rowPerPage");
+		String categoryName = (String)request.getAttribute("categoryName");
+
+		int totalCount = (Integer)request.getAttribute("totalCount");
+		System.out.println("index.jsp currentPage " + currentPage + " rowPerPage" + rowPerPage + " categoryName" + categoryName + " totalCount" + totalCount);
 	%>
 	
+	<div>
+			<a href="<%=request.getContextPath()%>/IndexController">[전체]</a>
+	<%
+		for(Category category : categoryList){
+	%>
+			<a href="<%=request.getContextPath()%>/IndexController?categoryName=<%=category.getCategoryName()%>">[<%=category.getCategoryName()%>]</a>
+	<%	
+		}
+	%>
+	</div>
 	<table border="1">
 		<tr>
 		<%
@@ -30,20 +48,39 @@
 					</div>
 					<div>가격 : <%=ebook.getEbookPrice()%>￦</div>
 				</td>
+			<!-- 5칸 이후 테이블 줄바꿈 -->
 			<%
 				if(i%5==0){
 			%>
 		</tr>
-		
 		<tr>
 			<%		
 				}
-			%>		
-				
-		<%
 			}
 		%>
 		</tr>
 	</table>
+		<%
+			// 첫 페이지에는 < 버튼이 보이지 않게
+			if(currentPage != 1){
+		%>
+				<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage-1%>&rowPerPage=<%=rowPerPage%>&categoryName=<%=categoryName%>"><button type="button">Previous</button></a>
+		<%
+			}
+		%>
+		<%
+			//마지막 페이지에는 > 버튼이 보이지 않게
+			if(currentPage < (totalCount/rowPerPage) + 1){ //나머지 부분도 출력하기 위한 +1
+		%>
+				<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage+1%>&rowPerPage=<%=rowPerPage%>&categoryName=<%=categoryName%>"><button type="button">Next</button></a>
+		<%
+			}
+		%>
 </body>
 </html>
+
+
+
+
+
+
