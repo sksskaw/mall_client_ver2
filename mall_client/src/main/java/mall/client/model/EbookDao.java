@@ -9,7 +9,7 @@ public class EbookDao {
 	private DBUtil dbutil = null;
 	
 	// ebook 천체 행 수 가져오기
-	public int totalCount(String categoryName) {
+	public int totalCount(String categoryName, String searchTitle) {
 		
 		this.dbutil = new DBUtil();
 		Connection conn = null;
@@ -17,16 +17,22 @@ public class EbookDao {
 		ResultSet rs = null;
 		int totalRow = 0;
 		
+		if(searchTitle == null) {
+			searchTitle = "";
+		}
+		
 		try {
 			conn = dbutil.getConnection();
 			String sql = null;
 			if(categoryName == null) { // 카테고리 선택 안했을 경우(전체 선택)
-				sql = "SELECT COUNT(*) FROM ebook";
+				sql = "SELECT COUNT(*) FROM ebook WHERE ebook_title like ?";
 				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, "%"+searchTitle+"%");
 			} else {
-				sql = "SELECT COUNT(*) FROM ebook WHERE category_name=?";
+				sql = "SELECT COUNT(*) FROM ebook WHERE category_name=? AND ebook_title like ?";
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, categoryName);
+				stmt.setString(2, "%"+searchTitle+"%");
 			}
 
 			System.out.println("totalCount " + stmt); //디버깅

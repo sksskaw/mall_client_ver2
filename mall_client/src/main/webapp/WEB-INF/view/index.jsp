@@ -35,10 +35,10 @@
 	</div>
 	
 	<!-- 검색 입력 폼 -->
-	<form action="<%=request.getContextPath()%>/IndexController" method="post">
+	<form action="<%=request.getContextPath()%>/IndexController" method="get">
 		<div>
 			<select name="categoryName">
-				<option value="1" selected>전체</option> <!-- 여기서 value를 ""로 보내면 문자열 null이 날라감, 문자열 "1"로 보내서 categoryName값이 1이면 카테고리 없는 쿼리 실행할 수 있게-->
+				<option value="null" selected>전체</option>
 			    <%
 					for(Category category : categoryList){
 				%>
@@ -81,33 +81,16 @@
 		</tr>
 	</table>
 		<%
-			if(categoryName == null){
-	
 				if(currentPage != 1){
 			%>
-					<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage-1%>&rowPerPage=<%=rowPerPage%>"><button type="button">Previous</button></a>
+						<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage-1%>&rowPerPage=<%=rowPerPage%>&categoryName=<%=categoryName%>&searchTitle=<%=searchTitle%>"><button type="button">Previous</button></a>
 			<%
 				}
 				if(currentPage < (totalCount/rowPerPage) + 1){ //나머지 부분도 출력하기 위한 +1
 			%>
-					<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage+1%>&rowPerPage=<%=rowPerPage%>"><button type="button">Next</button></a>
+					<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage+1%>&rowPerPage=<%=rowPerPage%>&categoryName=<%=categoryName%>&searchTitle=<%=searchTitle%>"><button type="button">Next</button></a>
 			<%
 				}
-				
-			} else{
-				
-				if(currentPage != 1){
-			%>
-						<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage-1%>&rowPerPage=<%=rowPerPage%>&categoryName=<%=categoryName%>"><button type="button">Previous</button></a>
-			<%
-				}
-				if(currentPage < (totalCount/rowPerPage) + 1){ //나머지 부분도 출력하기 위한 +1
-			%>
-					<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage+1%>&rowPerPage=<%=rowPerPage%>&categoryName=<%=categoryName%>"><button type="button">Next</button></a>
-			<%
-				}
-				
-			}
 		%>
 </body>
 </html>
