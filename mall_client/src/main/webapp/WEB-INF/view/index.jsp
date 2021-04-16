@@ -18,6 +18,7 @@
 		int rowPerPage = (Integer)request.getAttribute("rowPerPage");
 		String categoryName = (String)request.getAttribute("categoryName");
 
+
 		int totalCount = (Integer)request.getAttribute("totalCount");
 		System.out.println("index.jsp currentPage " + currentPage + " rowPerPage" + rowPerPage + " categoryName" + categoryName + " totalCount" + totalCount);
 	%>
@@ -61,19 +62,28 @@
 		</tr>
 	</table>
 		<%
-			// 첫 페이지에는 < 버튼이 보이지 않게
-			if(currentPage != 1){
+			if(categoryName == null){
+				if(currentPage != 1){
 		%>
-				<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage-1%>&rowPerPage=<%=rowPerPage%>&categoryName=<%=categoryName%>"><button type="button">Previous</button></a>
-		<%
-			}
-		%>
-		<%
-			//마지막 페이지에는 > 버튼이 보이지 않게
-			if(currentPage < (totalCount/rowPerPage) + 1){ //나머지 부분도 출력하기 위한 +1
-		%>
-				<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage+1%>&rowPerPage=<%=rowPerPage%>&categoryName=<%=categoryName%>"><button type="button">Next</button></a>
-		<%
+					<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage-1%>&rowPerPage=<%=rowPerPage%>"><button type="button">Previous</button></a>
+			<%
+				}
+				if(currentPage < (totalCount/rowPerPage) + 1){ //나머지 부분도 출력하기 위한 +1
+			%>
+					<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage+1%>&rowPerPage=<%=rowPerPage%>"><button type="button">Next</button></a>
+			<%
+				}
+			} else{
+				if(currentPage != 1){
+			%>
+						<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage-1%>&rowPerPage=<%=rowPerPage%>&categoryName=<%=categoryName%>"><button type="button">Previous</button></a>
+			<%
+				}
+				if(currentPage < (totalCount/rowPerPage) + 1){ //나머지 부분도 출력하기 위한 +1
+			%>
+					<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage+1%>&rowPerPage=<%=rowPerPage%>&categoryName=<%=categoryName%>"><button type="button">Next</button></a>
+			<%
+				}
 			}
 		%>
 </body>

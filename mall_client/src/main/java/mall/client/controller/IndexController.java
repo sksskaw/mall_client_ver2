@@ -32,9 +32,8 @@ public class IndexController extends HttpServlet {
 		
 		// 카테고리 선택
 		String categoryName = null;
-		if(request.getParameter("categoryName") != null) {
+		if(request.getParameter("categoryName") != null ) {
 			categoryName = request.getParameter("categoryName");
-			System.out.println("categoryName " + categoryName);
 		}
 		
 		// 검색
