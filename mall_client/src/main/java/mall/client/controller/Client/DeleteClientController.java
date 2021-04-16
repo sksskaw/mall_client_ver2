@@ -47,10 +47,10 @@ public class DeleteClientController extends HttpServlet {
 		clientDao = new ClientDao();
 		if(clientDao.checkClientCurrenPw(client) != null) { // 현재 비밀번호가 맞으면 회원 계정 삭제
 			
-			// 회원 탈퇴 이전에 카테고리 목록 삭제
+			// 회원 탈퇴 이전에 장바구니 목록 삭제
 			CartDao cartDao = new CartDao();
-			cartDao.deleteCartAll(client.getClientMail());
-			clientDao.deleteClient(client);
+			cartDao.deleteCartAll(client.getClientMail()); // 장바구니 목록 삭제
+			clientDao.deleteClient(client); // 회원 계정 삭제 메소드 호출
 			session.invalidate(); // 회원계정 삭제 후 세션 초기화(로그아웃)
 		} else {
 			System.out.println("현재 비밀번호가 틀렸습니다!");

@@ -175,6 +175,7 @@ public class ClientDao {
 			
 			if(rs.next()) {
 				returnCLient = new Client();
+				returnCLient.setClientNo(rs.getInt("client_no"));
 				returnCLient.setClientMail(rs.getString("client_mail"));
 			}
 		} catch(Exception e){

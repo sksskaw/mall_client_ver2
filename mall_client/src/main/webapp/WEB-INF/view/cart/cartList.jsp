@@ -34,7 +34,7 @@
 					<a href="<%=request.getContextPath()%>/DeleteCartController?cartNo=<%=list.get("cartNo")%>"><button type="button">삭제</button></a>
 				</td>
 				<td>
-					<a href=""><button type="button">주문</button></a>
+					<a href="<%=request.getContextPath()%>/InsertOrdersController?ebookNo=<%=list.get("ebookNo")%>&cartNo=<%=list.get("cartNo")%>"><button type="button">주문</button></a>
 				</td>
 			</tr>
 		<%
