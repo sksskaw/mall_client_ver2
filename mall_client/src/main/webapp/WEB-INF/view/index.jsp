@@ -33,6 +33,25 @@
 		}
 	%>
 	</div>
+	
+	<!-- 검색 입력 폼 -->
+	<form action="<%=request.getContextPath()%>/IndexController" method="post">
+		<div>
+			<select name="categoryName">
+				<option value="1" selected>전체</option> <!-- 여기서 value를 ""로 보내면 문자열 null이 날라감, 문자열 "1"로 보내서 categoryName값이 1이면 카테고리 없는 쿼리 실행할 수 있게-->
+			    <%
+					for(Category category : categoryList){
+				%>
+						<option value="<%=category.getCategoryName()%>"><%=category.getCategoryName()%></option>
+				<%	
+					}
+				%>
+			</select>
+			<input type="text" name="searchTitle">
+			<button type="submit">검색</button>
+		</div>
+	</form>
+	
 	<table border="1">
 		<tr>
 		<%

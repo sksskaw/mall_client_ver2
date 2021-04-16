@@ -94,21 +94,27 @@ public class EbookDao {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
+		if(searchTitle == null) {
+			searchTitle = "";
+		}
+		
 		try {
 			conn = dbutil.getConnection();
 			System.out.println("DAO categoryName " + categoryName);
 			if(categoryName == null) { // 카테고리 선택 안했을 경우(전체 선택)
-				String sql = "SELECT * FROM ebook ORDER BY ebook_date DESC LIMIT ?, ?";
+				String sql = "SELECT * FROM ebook WHERE ebook_title like ? ORDER BY ebook_date DESC LIMIT ?, ?";
 				stmt = conn.prepareStatement(sql);
-				stmt.setInt(1, beginRow);
-				stmt.setInt(2, rowPerPage);
-
-			} else {
-				String sql = "SELECT * FROM ebook WHERE category_name=? ORDER BY ebook_date DESC LIMIT ?, ?";
-				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, categoryName);
+				stmt.setString(1, "%"+searchTitle+"%");
 				stmt.setInt(2, beginRow);
 				stmt.setInt(3, rowPerPage);
+
+			} else {
+				String sql = "SELECT * FROM ebook WHERE category_name=? AND ebook_title like ? ORDER BY ebook_date DESC LIMIT ?, ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, categoryName);
+				stmt.setString(2, "%"+searchTitle+"%");
+				stmt.setInt(3, beginRow);
+				stmt.setInt(4, rowPerPage);
 				
 			}
 			
