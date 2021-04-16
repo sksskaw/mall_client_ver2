@@ -17,7 +17,7 @@
 		int currentPage = (Integer)request.getAttribute("currentPage");
 		int rowPerPage = (Integer)request.getAttribute("rowPerPage");
 		String categoryName = (String)request.getAttribute("categoryName");
-
+		String searchTitle = (String)request.getAttribute("searchTitle");
 
 		int totalCount = (Integer)request.getAttribute("totalCount");
 		System.out.println("index.jsp currentPage " + currentPage + " rowPerPage" + rowPerPage + " categoryName" + categoryName + " totalCount" + totalCount);
@@ -82,8 +82,9 @@
 	</table>
 		<%
 			if(categoryName == null){
+	
 				if(currentPage != 1){
-		%>
+			%>
 					<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage-1%>&rowPerPage=<%=rowPerPage%>"><button type="button">Previous</button></a>
 			<%
 				}
@@ -92,7 +93,9 @@
 					<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage+1%>&rowPerPage=<%=rowPerPage%>"><button type="button">Next</button></a>
 			<%
 				}
+				
 			} else{
+				
 				if(currentPage != 1){
 			%>
 						<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage-1%>&rowPerPage=<%=rowPerPage%>&categoryName=<%=categoryName%>"><button type="button">Previous</button></a>
@@ -103,6 +106,7 @@
 					<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage+1%>&rowPerPage=<%=rowPerPage%>&categoryName=<%=categoryName%>"><button type="button">Next</button></a>
 			<%
 				}
+				
 			}
 		%>
 </body>

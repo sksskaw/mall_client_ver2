@@ -21,7 +21,7 @@ public class IndexController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//request 분석
-		
+		request.setCharacterEncoding("utf-8");
 		// 페이징 처리
 		int currentPage = 1;
 		if(request.getParameter("currentPage") != null) {
@@ -60,6 +60,8 @@ public class IndexController extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//request 분석
+		request.setCharacterEncoding("utf-8");
 		
 		// 페이징 처리
 		int currentPage = 1;

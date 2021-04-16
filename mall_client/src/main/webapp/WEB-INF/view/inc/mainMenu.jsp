@@ -11,6 +11,7 @@
 		<button type="submit">로그인</button>
 	</form>
 	<ul>
+		<li><a href="<%=request.getContextPath()%>/IndexController">홈</a></li>
 		<li><a href="<%=request.getContextPath()%>/InsertClientController">회원가입</a></li>
 	</ul>
 <%
