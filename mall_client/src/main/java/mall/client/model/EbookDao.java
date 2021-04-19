@@ -8,6 +8,40 @@ import mall.client.vo.Ebook;
 public class EbookDao {
 	private DBUtil dbutil = null;
 	
+	// 이번달에 나오는 책
+	public List<Map<String, Object>> selectEbookListByMonth(int year, int month){
+		this.dbutil = new DBUtil();
+		List<Map<String, Object>> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = dbutil.getConnection();
+			String sql = "SELECT ebook_no, ebook_title, DAY(ebook_date) d FROM ebook WHERE YEAR(ebook_date) = ? AND MONTH(ebook_date) = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, year);
+			stmt.setInt(2, month);
+			System.out.println("selectEbookListByMonth " + stmt);
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Map<String, Object> map = new HashMap<>();
+				map.put("ebookNo", rs.getInt("ebook_no"));
+				map.put("ebookTitle", rs.getString("ebook_title"));
+				map.put("day", rs.getInt("d"));
+				list.add(map);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbutil.close(rs, stmt, conn);
+		}
+		
+		return list;
+	}
+	
 	// ebook 천체 행 수 가져오기
 	public int totalCount(String categoryName, String searchTitle) {
 		

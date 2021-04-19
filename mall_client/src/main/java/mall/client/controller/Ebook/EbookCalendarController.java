@@ -2,6 +2,8 @@ package mall.client.controller.Ebook;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,24 +37,23 @@ public class EbookCalendarController extends HttpServlet {
 		
 		int lastDayOfMonth = dday.getActualMaximum(Calendar.DAY_OF_MONTH); // 말일 구하기
 		
-		// 이번달이 몇요일 부터 시작인지
-		final String[] week = { "일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일" };
 		dday.set(Calendar.DATE,1);
 		System.out.println("dday " + dday);
 		int startDayOfTheWeek = dday.get(Calendar.DAY_OF_WEEK);
-		String str_startDayOfTheWeek = week[startDayOfTheWeek - 1];
+		
+		ebookDao = new EbookDao();
+		List<Map<String, Object>> EbookListByMonth = this.ebookDao.selectEbookListByMonth(currentYear, currentMonth);
 
 		System.out.println("currentYear " + currentYear);
 		System.out.println("currentMonth " + currentMonth);
 		System.out.println("lastDayOfMonth " + lastDayOfMonth);
 		System.out.println("startDayOfTheWeek " + startDayOfTheWeek);
-		System.out.println("str_startDayOfTheWeek " + str_startDayOfTheWeek);
 		
 		request.setAttribute("currentYear",currentYear);
 		request.setAttribute("currentMonth",currentMonth);
 		request.setAttribute("lastDayOfMonth",lastDayOfMonth);
 		request.setAttribute("startDayOfTheWeek",startDayOfTheWeek);
-		request.setAttribute("str_startDayOfTheWeek",str_startDayOfTheWeek);
+		request.setAttribute("EbookListByMonth",EbookListByMonth);
 		
 		request.getRequestDispatcher("/WEB-INF/view/ebook/ebookCalendar.jsp").forward(request, response);
 	}

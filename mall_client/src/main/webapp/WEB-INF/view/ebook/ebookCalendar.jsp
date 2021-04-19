@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@page import="java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +14,7 @@
 		int currentMonth = (Integer)request.getAttribute("currentMonth");
 		int lastDayOfMonth = (Integer)request.getAttribute("lastDayOfMonth");
 		int startDayOfTheWeek = (Integer)request.getAttribute("startDayOfTheWeek");
-		
+		List<Map<String, Object>> EbookListByMonth = (List<Map<String, Object>>)request.getAttribute("EbookListByMonth");
 		// 이전달 다음달 처리
 		int preYear = currentYear;
 		int preMonth = currentMonth - 1;
@@ -60,15 +60,40 @@
 				// 달력 날짜 체우기
 				for(int i=1; i<=lastDayOfMonth; i++){
 			%>
-					<td><%=i%></td>
-					<%
+					<td><%=i%>
+						<%
+							for(Map m : EbookListByMonth){
+								if((Integer)m.get("day") == i)
+								{
+							%>
+									<div>
+										<a href="<%=request.getContextPath()%>/EbookOneController?ebookNo=<%=m.get("ebookNo")%>">
+											<%	
+												String ebookTitle = (String)m.get("ebookTitle");
+												if(ebookTitle.length() > 10){
+											%>
+													<%=ebookTitle.substring(0,10)+"..."%>
+											<%
+												} else{
+											%>
+													<%=ebookTitle%>
+											<%
+												}
+											%>
+										</a>
+									</div>
+							<%
+								}
+							}
+						%>
+					</td>
+			<%
 						if(a%7 == 0){
 					%>
 						<tr></tr>
 					<%
 						}
-					%>
-			<%		a = a + 1;
+						a = a + 1;
 				}
 				//마지막 칸 처리
 				for(int i = (a-1)%7; i<7; i++){
