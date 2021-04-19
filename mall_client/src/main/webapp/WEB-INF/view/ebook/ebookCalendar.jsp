@@ -61,7 +61,7 @@
 				for(int i=1; i<=lastDayOfMonth; i++){
 			%>
 					<td><%=i%>
-						<%
+ 						<%
 							for(Map m : EbookListByMonth){
 								if((Integer)m.get("day") == i)
 								{
