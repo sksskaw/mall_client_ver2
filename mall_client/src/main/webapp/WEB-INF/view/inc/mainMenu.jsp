@@ -13,6 +13,7 @@
 	<ul>
 		<li><a href="<%=request.getContextPath()%>/IndexController">홈</a></li>
 		<li><a href="<%=request.getContextPath()%>/InsertClientController">회원가입</a></li>
+		<li><a href="<%=request.getContextPath()%>/EbookCalendarController">ebook 달력</a></li>
 	</ul>
 <%
 	} else{
@@ -28,6 +29,7 @@
 			<li><a href="<%=request.getContextPath()%>/SelectOneClientController">회원정보</a></li>
 			<li><a href="<%=request.getContextPath()%>/CartListController">장바구니</a></li>
 			<li><a href="<%=request.getContextPath()%>/OrdersListController">주문목록</a></li>
+			<li><a href="<%=request.getContextPath()%>/EbookCalendarController">ebook 달력</a></li>
 		</ul>
 	</div>
 <%
