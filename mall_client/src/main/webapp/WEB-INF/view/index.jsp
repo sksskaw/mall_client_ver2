@@ -13,6 +13,7 @@
 	<%
 		List<Ebook> ebookList = (List<Ebook>)request.getAttribute("ebookList");
 		List<Category> categoryList = (List<Category>)request.getAttribute("categoryList");
+		List<Map<String, Object>> bestOrdersList = (List<Map<String, Object>>)request.getAttribute("bestOrdersList");
 		
 		int currentPage = (Integer)request.getAttribute("currentPage");
 		int rowPerPage = (Integer)request.getAttribute("rowPerPage");
@@ -52,6 +53,31 @@
 		</div>
 	</form>
 	
+	<!-- best ebook 출력 -->
+	<h1>best ebook</h1>
+	<table border="1">
+		<tr>
+		<%
+			for(Map m : bestOrdersList){
+		%>
+				<td>
+					<div><img src="<%=request.getContextPath()%>/img/default.jpg"></div>
+					<div>카테고리 : <%=m.get("categoryName")%></div>
+					<div>제목 : 
+						<a href="<%=request.getContextPath()%>/EbookOneController?ebookNo=<%=m.get("ebookNo")%>">
+							<%=m.get("ebookTitle")%>
+						</a>
+					</div>
+					<div>가격 : <%=m.get("ebookPrice")%>￦</div>
+				</td>
+		<%
+			}
+		%>
+		</tr>
+	</table>
+	<br>
+	<h1>ebook List</h1>
+	<!-- ebook 상품 출력 -->
 	<table border="1">
 		<tr>
 		<%

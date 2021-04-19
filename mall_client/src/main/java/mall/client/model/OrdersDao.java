@@ -12,6 +12,50 @@ import mall.client.vo.Orders;
 public class OrdersDao {
 	private DBUtil dbutil;
 	
+public List<Map<String, Object>> selectBestOrdersList(){
+		
+		List<Map<String, Object>> list = new ArrayList();
+		
+		this.dbutil = new DBUtil();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = this.dbutil.getConnection();
+			String sql = "SELECT t.ebook_no, t.cnt, e.ebook_title, e.ebook_price, e.category_name\n"
+					+ "FROM\n"
+					+ "	(SELECT ebook_no, COUNT(ebook_no) cnt\n"
+					+ "	FROM orders\n"
+					+ "	WHERE orders_state = '주문완료'\n"
+					+ "	GROUP BY ebook_no\n"
+					+ "	HAVING COUNT(ebook_no) > 1 \n"
+					+ "	ORDER BY COUNT(ebook_no) DESC\n"
+					+ "	LIMIT 5) t INNER JOIN ebook e\n"
+					+ "ON t.ebook_no = e.ebook_no";
+			
+			stmt = conn.prepareStatement(sql);
+			System.out.println("selectBestOrdersList " + stmt);
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Map<String, Object> map = new HashMap<>();
+				map.put("ebookNo", rs.getInt("ebook_no"));
+				map.put("ebook_Cnt", rs.getInt("cnt"));
+				map.put("categoryName", rs.getString("category_name"));
+				map.put("ebookTitle", rs.getString("ebook_title"));
+				map.put("ebookPrice", rs.getInt("ebook_price"));
+				list.add(map);
+			}
+		} catch(Exception e){
+			e.printStackTrace();
+		} finally {
+			this.dbutil.close(rs, stmt, conn);
+		}
+		
+		return list;
+	}
+	
 	public List<Map<String, Object>> selectOrderListByClient(int clientNo){
 		
 		List<Map<String, Object>> list = new ArrayList();

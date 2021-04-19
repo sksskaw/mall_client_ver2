@@ -1,7 +1,7 @@
 package mall.client.controller;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,10 +18,11 @@ import mall.client.vo.*;
 public class IndexController extends HttpServlet {
 	private EbookDao ebookDao;
 	private CategoryDao categoryDao;
+	private OrdersDao ordersDao;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//request 분석
-		request.setCharacterEncoding("utf-8");
+		
 		// 페이징 처리
 		int currentPage = 1;
 		if(request.getParameter("currentPage") != null) {
@@ -59,6 +60,10 @@ public class IndexController extends HttpServlet {
 		this.categoryDao = new CategoryDao();
 		List<Category> categoryList = this.categoryDao.selectCategory();
 		
+		// BestEbookList
+		this.ordersDao = new OrdersDao();
+		List<Map<String, Object>> bestOrdersList = this.ordersDao.selectBestOrdersList();
+		
 		// EbookList totalCount
 		int totalCount = this.ebookDao.totalCount(categoryName, searchTitle);
 		
@@ -71,6 +76,7 @@ public class IndexController extends HttpServlet {
 		request.setAttribute("totalCount",totalCount);
 		request.setAttribute("ebookList", ebookList); // request객체에 ebookList 정보 넣어주기
 		request.setAttribute("categoryList", categoryList); // request객체에 categoryList 정보 넣어주기
+		request.setAttribute("bestOrdersList",bestOrdersList); // 베스트 상품 list 정보 넣어주기
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/index.jsp");
 		rd.forward(request, response);
 	}
