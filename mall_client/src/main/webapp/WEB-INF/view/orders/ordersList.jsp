@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="java.util.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,10 +7,6 @@
 <title>ordersList</title>
 </head>
 <body>
-<%
-	List<Map<String, Object>> ordersList = (List<Map<String, Object>>)request.getAttribute("ordersList");
-%>
-
 	<jsp:include page="/WEB-INF/view/inc/mainMenu.jsp"></jsp:include>
 	
 	<h1>주문 목록</h1>
@@ -23,30 +19,27 @@
 			<th>ebookTitle</th>
 			<th>ebookPrice</th>
 		</tr>
-		<%
-			int totalPrice = 0;
-			for(Map m : ordersList){
-				totalPrice = totalPrice + (Integer)(m.get("ebookPrice"));
-		%>
+		
+		<c:forEach var="m" items="${ordersList}">
 			<tr>
-				<td><%=(Integer)(m.get("ordersNo"))%></td>
-				<td><%=(Integer)(m.get("ebookNo"))%></td>
-				<td><%=((String)(m.get("ordersDate"))).substring(0,10)%></td>
-				<td><%=(String)(m.get("ordersState"))%></td>
-				<td><%=(String)(m.get("ebookTitle"))%></td>
-				<td><%=(Integer)(m.get("ebookPrice"))%></td>
+				<td>${m.ordersNo}</td>
+				<td>${m.ebookNo}</td>
+				<td>${m.ordersDate.substring(0,10)}</td>
+				<td>${m.ordersState}</td>
+				<td>${m.ebookTitle}</td>
+				<td>${m.ebookPrice}</td>
 			</tr>
-		<%
-			}
-		%>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td>총 금액: <%=totalPrice%></td>
-			</tr>
+			<c:set var="totalPrice" value="${totalPrice + m.ebookPrice}"/>
+		</c:forEach>
+		
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>총 금액: ${totalPrice}</td>
+		</tr>
 	</table>
 </body>
 </html>

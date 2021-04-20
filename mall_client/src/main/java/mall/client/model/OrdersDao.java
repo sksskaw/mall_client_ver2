@@ -35,7 +35,7 @@ public List<Map<String, Object>> selectBestOrdersList(){
 					+ "ON t.ebook_no = e.ebook_no";
 			
 			stmt = conn.prepareStatement(sql);
-			System.out.println("selectBestOrdersList " + stmt);
+			//System.out.println("selectBestOrdersList " + stmt);
 			rs = stmt.executeQuery();
 			
 			while(rs.next()) {

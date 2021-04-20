@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
-<%@page import="mall.client.vo.Client"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,10 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
-	Client client = (Client)request.getAttribute("client");
-%>
-
 	<jsp:include page="/WEB-INF/view/inc/mainMenu.jsp"></jsp:include>
 	<!-- 메뉴1 -->
 
@@ -18,24 +14,24 @@
 	<table border="1">
 		<tr>
 			<td>clientNo</td>
-			<td><%=client.getClientNo() %></td>
+			<td>${client.clientNo}</td>
 		</tr>
 
 		<tr>
 			<td>clientMail</td>
-			<td><%=client.getClientMail() %></td>
+			<td>${client.clientMail}</td>
 		</tr>
 
 		<tr>
 			<td>clientDate</td>
-			<td><%=client.getClientDate() %></td>
+			<td>${client.clientDate.substring(0,10)}</td>
 		</tr>
 	</table>
 	<!-- UpdateClientPwController.doGet() - updateClientPw.jsp -->
 	<!-- UpdateClientPwController.doPost() - clientDao.updateClientPw() - session.invalidate() - redirect:/IndexController -->
-	<a href="<%=request.getContextPath()%>/UpdateClientPwController?clientMail=<%=client.getClientMail() %>"><button type="button">비밀번호수정</button></a>
+	<a href="${pageContext.request.contextPath}/UpdateClientPwController?clientMail=${client.clientMail}"><button type="button">비밀번호수정</button></a>
 	
 	<!-- DeleteClientController - clientDao.deleteClient() -- session.invalidate() - redirect:/IndexController-->
-	<a href="<%=request.getContextPath()%>/DeleteClientController"><button type="button">회원탈퇴</button></a>
+	<a href="${pageContext.request.contextPath}/DeleteClientController"><button type="button">회원탈퇴</button></a>
 </body>
 </html>

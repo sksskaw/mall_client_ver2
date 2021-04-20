@@ -36,7 +36,7 @@ public class IndexController extends HttpServlet {
 		if(request.getParameter("categoryName") != null ) {
 			categoryName = request.getParameter("categoryName");
 			
-			if(request.getParameter("categoryName").equals("null")) { // 문자열 null이 넘어올 경우 진짜 null로 변경
+			if(request.getParameter("categoryName").equals("null") || request.getParameter("categoryName").equals("")) { // 문자열 null이 넘어올 경우 진짜 null로 변경
 				categoryName = null;
 			}
 			
