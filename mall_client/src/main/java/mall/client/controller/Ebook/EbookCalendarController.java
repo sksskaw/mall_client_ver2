@@ -43,17 +43,42 @@ public class EbookCalendarController extends HttpServlet {
 		
 		ebookDao = new EbookDao();
 		List<Map<String, Object>> EbookListByMonth = this.ebookDao.selectEbookListByMonth(currentYear, currentMonth);
-
-		System.out.println("currentYear " + currentYear);
-		System.out.println("currentMonth " + currentMonth);
-		System.out.println("lastDayOfMonth " + lastDayOfMonth);
-		System.out.println("startDayOfTheWeek " + startDayOfTheWeek);
+	
+		int preYear = currentYear;
+		int preMonth = currentMonth - 1;
+		if(preMonth == 0){
+			preMonth = 12;
+			preYear -= 1;
+		}
+		
+		int nextYear = currentYear;
+		int nextMonth = currentMonth + 1;
+		if(nextMonth == 13){
+			nextMonth = 1;
+			nextYear += 1;
+		}
 		
 		request.setAttribute("currentYear",currentYear);
 		request.setAttribute("currentMonth",currentMonth);
 		request.setAttribute("lastDayOfMonth",lastDayOfMonth);
 		request.setAttribute("startDayOfTheWeek",startDayOfTheWeek);
 		request.setAttribute("EbookListByMonth",EbookListByMonth);
+		
+		request.setAttribute("preYear",preYear);
+		request.setAttribute("preMonth",preMonth);
+		request.setAttribute("nextYear",nextYear);
+		request.setAttribute("nextMonth",nextMonth);
+		
+		System.out.println("currentYear " + currentYear);
+		System.out.println("currentMonth " + currentMonth);
+		System.out.println("lastDayOfMonth " + lastDayOfMonth);
+		System.out.println("startDayOfTheWeek " + startDayOfTheWeek);
+		System.out.println("EbookListByMonth " + EbookListByMonth);
+		
+		System.out.println("preYear " + preYear);
+		System.out.println("preMonth " + preMonth);
+		System.out.println("nextYear " + nextYear);
+		System.out.println("nextMonth " + nextMonth);
 		
 		request.getRequestDispatcher("/WEB-INF/view/ebook/ebookCalendar.jsp").forward(request, response);
 	}
