@@ -19,7 +19,7 @@ public class IndexController extends HttpServlet {
 	private EbookDao ebookDao;
 	private CategoryDao categoryDao;
 	private OrdersDao ordersDao;
-	
+	private StatsDao statsDao;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//request 분석
 		
@@ -66,6 +66,11 @@ public class IndexController extends HttpServlet {
 		
 		// EbookList totalCount
 		int totalCount = this.ebookDao.totalCount(categoryName, searchTitle);
+		
+		//접속자 관련 데이터
+		this.statsDao = new StatsDao();
+		long totalVisit = this.statsDao.selectStatsTotal();
+		int totalVisitByToday = this.statsDao.selectStatsByToday();
 		
 		// View forward
 		//System.out.println("IndexController currentPage " + currentPage + " rowPerPage" + rowPerPage + " categoryName" + categoryName + " totalCount" + totalCount);
