@@ -26,10 +26,7 @@ public class CartListController extends HttpServlet {
 			response.sendRedirect(request.getContextPath()+"/IndexController");
 			return;
 		}
-		
-		// 인코딩 설정
-		request.setCharacterEncoding("utf-8");
-		
+			
 		// 세션에 있는 로그인정보(clientMail)을 져온다.
 		// 메소드 에서 사용하는 매개변수를 넘겨주기 위해 필요한 값을 가져온다.
 		Client client = new Client();

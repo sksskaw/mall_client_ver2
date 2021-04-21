@@ -24,8 +24,6 @@ public class InsertCartController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "IndexController");
 			return;
 		}
-
-		request.setCharacterEncoding("utf-8");
 		
 		int ebookNo = Integer.parseInt(request.getParameter("ebookNo"));
 		String clientMail = ((Client)(session.getAttribute("loginClient"))).getClientMail();

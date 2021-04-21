@@ -35,8 +35,8 @@ public class IndexController extends HttpServlet {
 		String categoryName = null;
 		if(request.getParameter("categoryName") != null ) {
 			categoryName = request.getParameter("categoryName");
-			
-			if(request.getParameter("categoryName").equals("null") || request.getParameter("categoryName").equals("")) { // 문자열 null이 넘어올 경우 진짜 null로 변경
+			// 문자열 "null" or ""(공백 문자열)이 넘어올 경우 진짜 null로 변경
+			if(request.getParameter("categoryName").equals("null") || request.getParameter("categoryName").equals("")) {
 				categoryName = null;
 			}
 			
@@ -46,8 +46,8 @@ public class IndexController extends HttpServlet {
 		String searchTitle = null;
 		if(request.getParameter("searchTitle") != null) {
 			searchTitle = request.getParameter("searchTitle");
-			
-			if(request.getParameter("searchTitle").equals("null")) { // 문자열 null이 넘어올 경우 진짜 null로 변경
+			// 문자열 "null" or ""(공백 문자열)이 넘어올 경우 진짜 null로 변경
+			if(request.getParameter("searchTitle").equals("null") || request.getParameter("searchTitle").equals("")) {
 				searchTitle = null;
 			}
 		}

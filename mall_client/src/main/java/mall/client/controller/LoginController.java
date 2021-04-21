@@ -23,8 +23,7 @@ public class LoginController extends HttpServlet {
 			response.sendRedirect(request.getContextPath()+"/IndexController");
 			return;
 		}
-		
-		request.setCharacterEncoding("utf-8");
+
 		String clientMail = request.getParameter("clientMail");
 		String clientPw = request.getParameter("clientPw");
 		Client client = new Client();
